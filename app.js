@@ -1,31 +1,42 @@
-let makeGrid = document.createElement('div');
+let gridSize = 16;
+function makeGrid() {
 
-for (let i = 0; i < 256; i++) {
-    makeGrid = document.createElement('div');
-    makeGrid.className = 'grid';
+    for (let i = 0; i < gridSize * gridSize; i++) {
+        let makeDiv = document.createElement('div');
+        makeDiv.className = 'grid-item';
 
-    document.getElementById('grid-container').appendChild(makeGrid);
+        document.getElementById('grid-container').appendChild(makeDiv);
+        document.getElementById('grid-container').style.gridTemplateColumns = "repeat(" + gridSize + ", 30px";
+        document.getElementById('grid-container').style.gridTemplateRows = "repeat(" + gridSize + ", 30px";
+    }
 }
 
-const grid = document.querySelectorAll('.grid');
-for (let i = 0; i < grid.length; i++) {
-    grid[i].addEventListener('mouseenter', function () {
-        grid[i].classList.toggle('black');
+
+function removeGrid() {
+    gridItem.forEach(function (e) {
+        e.remove();
+    })
+}
+makeGrid();
+
+
+const gridItem = document.querySelectorAll('.grid-item');
+function hover() {
+    gridItem.forEach(function (e) {
+        e.addEventListener('mouseenter', function () {
+            e.classList.toggle('black');
+        })
     })
 }
 
+hover();
+
 const customGridButton = document.querySelector('#customGridButton')
+
 customGridButton.addEventListener('click', function () {
-    customGrid = prompt('Enter a Custom Grid');
-    if (customGrid <= 100) {
-        grid.forEach(function(item){
-            item.remove();
-        })
-        for (let i = 0; i < (customGrid * customGrid); i++) {
-            makeGrid = document.createElement('div');
-            makeGrid.className = 'grid';
-            makeGrid.style.width = document.getElementById('grid-container').offsetWidth / customGrid + "px";
-            document.getElementById('grid-container').appendChild(makeGrid);
-        }
-    }
+    gridSize = prompt('Enter a Custom Grid');
+    removeGrid();
+    makeGrid();
+    hover();
 })
+

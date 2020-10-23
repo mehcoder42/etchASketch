@@ -8,15 +8,14 @@
 #grid-container {
     
     display: grid;
-    font-size: 10px;
+    justify-content: center;
 
 }
 
-.grid {
-    background: white;
+.grid-item {
+    display: flex;
+    background-color: white;
     border: 1px solid;
-    width: 25px;
-    height: 25px;
 }
 
 .black {
