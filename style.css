@@ -1,12 +1,11 @@
 
-
 .mainTitle {
     text-align: center;
     padding: 15px;
 }
 
 #grid-container {
-    
+
     display: grid;
     justify-content: center;
 
@@ -19,12 +18,28 @@
 }
 
 .black {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.1)
 }
 
 .button {
-    padding-top: 30px;
+    padding-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#customGridButton {
+    margin : 10px;
+}
+
+#clearGridButton {
+    margin : 10px;
+}
+
+#blackWhiteButton {
+    margin : 10px;
+}
+
+#randomColorButton {
+    margin : 10px;
 }
