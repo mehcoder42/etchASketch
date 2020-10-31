@@ -16,19 +16,24 @@ function makeGrid() {
 }
 
 
-
 // Make a custom grid
 const customGridButton = document.querySelector('#customGridButton');
 customGridButton.addEventListener('click', makeCustomGrid);
 
 function makeCustomGrid() {
     gridItem = document.querySelectorAll('.grid-item');
-    gridSize = prompt('Enter a Custom Grid');
+    while (gridSize !== null || gridSize !== false) {
+        gridSize = prompt('Enter a Custom Grid (1-100)');
+        if (gridSize !== null && gridSize !== "" && Number(gridSize) !== 0) {
+            break;
+        } else {
+            alert('ONLY 1-100 ALLOWED!!!');
+        }
+    }
     removeGrid();
     makeGrid();
     checkLastButtonClicked();
 }
-
 
 
 // Remove the old grid to make a new one
@@ -40,24 +45,41 @@ function removeGrid() {
 }
 
 
-
-// Remember last button the user clicked
+// Remember the last preferences the user picked
 let lastButton;
 function checkLastButtonClicked() {
     if (lastButton == 'black') {
-        makeGridColorBlack();
+        makeBlackGridColor();
     } else if (lastButton == 'random') {
-        makeGridColorRandom();
+        makeRandomGridColor();
+    } else if (lastButton == 'custom') {
+        makeCustomGridColor();
     }
 }
 
+// Pick color from the color input and use it to etch
+const colorPickerButton = document.querySelector('#colorPickerButton');
+let customColor = colorPickerButton.value;
+colorPickerButton.addEventListener('change', makeCustomGridColor);
+
+function makeCustomGridColor() {
+    let customColor = colorPickerButton.value;
+    gridItem = document.querySelectorAll('.grid-item');
+    gridItem.forEach(function (e) {
+        e.addEventListener('mouseenter',function(){
+            e.style.backgroundColor = `${customColor}`;
+        })
+    })
+    lastButton = 'custom';
+    return lastButton;
+}
 
 
-// Darken the color of each grid when hovered until it becomes pure black
+// Makes the grid color black when hovered
 const blackAndWhiteButton = document.querySelector('#blackAndWhiteButton');
-blackAndWhiteButton.addEventListener('click', makeGridColorBlack);
+blackAndWhiteButton.addEventListener('click', makeBlackGridColor);
 
-function makeGridColorBlack() {
+function makeBlackGridColor() {
     gridItem = document.querySelectorAll('.grid-item');
     gridItem.forEach(function (e) {
         let gridColor = 255;
@@ -71,6 +93,25 @@ function makeGridColorBlack() {
 }
 
 
+// Create a random color for each grid when hovered
+const randomColorButton = document.querySelector('#randomColorButton');
+randomColorButton.addEventListener('click', makeRandomGridColor);
+
+function makeRandomGridColor() {
+    gridItem = document.querySelectorAll('.grid-item');
+    gridItem.forEach(function (e) {
+        e.addEventListener('mouseenter', function () {
+            function randomColor() {
+                let random = Math.floor(Math.random() * 255);
+                return random;
+            }
+            e.style.backgroundColor = `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+        })
+    })
+    lastButton = 'random';
+    return lastButton;
+}
+
 
 // Clear the current grid
 const clearGridButton = document.querySelector('#clearGridButton');
@@ -80,30 +121,46 @@ function clearGrid() {
     gridItem.forEach(function (e) {
         e.style.backgroundColor = 'rgb(255,255,255)';
     })
-    checkLastButtonClicked(); 
+    checkLastButtonClicked();
 }
 
 
+// Erase the etch
+const eraseGridButton = document.querySelector('#eraseGridButton');
+eraseGridButton.addEventListener('click', eraseGrid);
 
-// Create a random color for each grid when hovered
-const randomColorButton = document.querySelector('#randomColorButton');
-randomColorButton.addEventListener('click', makeGridColorRandom);
-
-function makeGridColorRandom() {
+function eraseGrid() {
     gridItem = document.querySelectorAll('.grid-item');
     gridItem.forEach(function (e) {
         e.addEventListener('mouseenter', function () {
-            function randomColor() {
-                let random = Math.floor(Math.random() * 255);
-                return random;
-            } 
-            e.style.backgroundColor = `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+            e.style.backgroundColor = 'rgb(255,255,255)';
         })
     })
-    lastButton = 'random';
-    return lastButton;
 }
 
 
+// Disable or enable the grid
+const gridOnOffbutton = document.querySelector('#gridOnOffButton')
+gridOnOffbutton.addEventListener('click', gridOnOrOff);
+
+let grid = true;
+function gridOnOrOff() {
+    if (grid === true) {
+        grid = false;
+        gridItem = document.querySelectorAll('.grid-item');
+        gridItem.forEach(function (e) {
+            e.style.border = 'none';
+        })
+        gridOnOffbutton.style.backgroundColor = 'red';
+    } else {
+        grid = true;
+        gridItem = document.querySelectorAll('.grid-item');
+        gridItem.forEach(function (e) {
+            e.style.border = '1px solid';
+        })
+        gridOnOffbutton.style.backgroundColor = 'green';
+    }
+}
+
 makeGrid();
-makeGridColorBlack();
+makeBlackGridColor();

@@ -6,17 +6,21 @@
     <title>Etch A Sketch</title>
     <link rel='stylesheet' href='reset.css'>
     <link rel='stylesheet' href='style.css'>
+    <link rel='icon' href='img/icon.jpeg'>
 </head>
 
 <body>
     <main>
         <h1 class='mainTitle'>Etch A Sketch</h1>
         <div id='grid-container'></div>
-        <div class='button'>
-            <button id='customGridButton'>Custom</button>
-            <button id='blackAndWhiteButton'>Black</button>
-            <button id='randomColorButton'>Random</button>
-            <button id='clearGridButton'>Clear</button>
+        <div id='button-container'>
+            <img class='button-item' id='customGridButton' src='img/custom.png'></img>
+            <img class='button-item' id='eraseGridButton' src='img/eraser.png'></img>
+            <img class='button-item' id='blackAndWhiteButton' src='img/black.png'></img>
+            <input class='button-item' id='colorPickerButton' type='color' value='#ff0000'>
+            <img class='button-item' id='randomColorButton' src='img/random.png'></img>
+            <img class='button-item' id='clearGridButton' src='img/reset.png'></img>
+            <img class='button-item' id='gridOnOffButton' src='img/onoff.jpg'></img>
         </div>
     </main>
     <script src='app.js'></script>
